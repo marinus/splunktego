@@ -9,3 +9,11 @@ modtime = 1385450064.208639000
 [app/package/check_for_updates]
 version = 6.0
 modtime = 1385450064.210287000
+
+[commands/maltego]
+access = read : [ * ], write : [ * ]
+export = system
+owner = nobody
+version = 6.0
+modtime = 1335270996.162068100
+
