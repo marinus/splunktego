@@ -1,0 +1,3 @@
+[submodule "pymtgx"]
+	path = pymtgx
+	url = https://github.com/pcbje/pymtgx.git
