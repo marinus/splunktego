@@ -10,13 +10,21 @@ There's two primary modes.
 
 S2M Examples
 --------------
+syntax
+* | maltego e1=entity [e2=entity] [type=entity type] [label=label] file=file name
 
-syntax:
-* | maltego e1=entity [e2=entity] [type=]
+export a list of entities
+* | maltego e1=src type=IPv4Address file=/tmp/attack
+
+export related entities
+* | maltego e1=src e2=dst label=proto type=IPv4Address file=/tmp/attacks
 
 
 M2S Examples
 --------------
+create a Phrase entity
+"earliest=-1d source=fwlogs | dedup ip | fields ip"
+call the to SplunkSearch transform 
 
 
 
