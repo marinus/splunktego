@@ -1,3 +1,6 @@
 [submodule "pymtgx"]
 	path = pymtgx
 	url = https://github.com/pcbje/pymtgx.git
+[submodule "networkx"]
+	path = networkx
+	url = https://github.com/networkx/networkx.git
