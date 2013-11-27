@@ -46,6 +46,7 @@ import os
 import tempfile
 import pymtgx
 import posixpath
+import traceback
 
 DEBUG = True # write debug info out
 entities_file = "/opt/splunk/etc/apps/splunktego/bin/entities.mtz"
@@ -100,32 +101,37 @@ try:
 	# get the previous search results
 	results,unused1,unused2 = splunk.Intersplunk.getOrganizedResults()
 
-	nodes = {}
 	links = []
 
 	# parse the results
+	fields = set()
 	for result in results:
-		nodes[result[e1]] = True
-		if e2: 
-			nodes[result[e2]] = True
 		
-		if label:
-			links.append((result[e1],result[e2],result.get(label,'?')))
-			
-	# create the graph
-	if not e2:
-		# create nodes
-		for node in nodes:
-			mtgx.add_node("maltego." + etype , node)
-	else:
-		# create nodes
-		for node in nodes:
-			nodes[node] = mtgx.add_node("maltego." + etype , node)
-			
-		# create relationships
-		for (e1,e2,label) in links:
-			mtgx.add_edge(nodes[e1], nodes[e2], label)
+		# make a list of all the fields
+		fields.add(result[e1])
+		if e2: 
+			fields.add(result[e2])
 
+		# record relationships
+		if label:
+			links.append(
+			    (result[e1], result[e2], result[label])
+			)
+			
+	# create entities nodes
+	entities = {}
+	for field in fields:
+		entities[field] = mtgx.add_node("maltego." + etype , field)	
+	
+	# add edges
+	if links:
+		for (e1, e2, label) in links:
+			log('%s %s %s' %(e1, e2, label))
+			mtgx.add_edge(
+			    entities[e1],
+			    entities[e2], 
+			    label)
+		
 	# zero out the response
 	results = []
 	
@@ -136,6 +142,7 @@ try:
 	mtgx.create(fname)
 	
 except Exception, e:
+	log(traceback.print_exc(file=sys.stdout))
 	results = splunk.Intersplunk.generateErrorResults(str(e))
 
 
