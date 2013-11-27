@@ -10,14 +10,14 @@ You'd probbable what to
 S2M Examples
 --------------
 syntax
-> * | maltego e1=entity [e2=entity] [type=entity type] [label=label] file=filename
+  * | maltego e1=entity [e2=entity] [type=entity type] [label=label] file=filename
 
 export a list of entities
 
-> * | maltego e1=src type=IPv4Address file=/tmp/attack
+  * | maltego e1=src type=IPv4Address file=/tmp/attack
 
 export entities with relationships
-> * | maltego e1=src e2=dst label=proto type=IPv4Address file=/tmp/attacks
+  * | maltego e1=src e2=dst label=proto type=IPv4Address file=/tmp/attacks
 
 for all the systems that are being splunked,
    find all ip addresses, accross all the logs,
@@ -25,7 +25,7 @@ for all the systems that are being splunked,
    indicating when the last event was received.
    Phew!
    
-> * | rex "(?<ip_address>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)" | dedup ip_address | maltego e1=ip_address e2=host label=_time file=/tmp/lastseen
+  * | rex "(?<ip_address>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)" | dedup ip_address | maltego e1=ip_address e2=host label=_time file=/tmp/lastseen
 
 You can not load these graphs in Maltego.
 
@@ -65,10 +65,16 @@ To simplify matters and not break Splunk, pymtgx and networkx dependencies need 
 Following the sagely advice of the Sorkin, http://answers.splunk.com/answers/6033/adding-python-module-to-splunk
 
 - Clone the pymtgx and networkx from github
+  https://github.com/networkx/networkx.git
+  https://github.com/pcbje/pymtgx.git
+  
 - Link to the source from splunk/etc/apps/splunktego/bin
   cd <where you installed splunk/etc/apps/splunktego/bin
   ln -s .../networkx/networkx .
   ln -s .../pymtgx/pymtgx.py .
+  
+  
+  
 
 pymtx, requires an extract of entities from Maltego. 
 Export them, and update the path in the maltogo.py file.
