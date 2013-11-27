@@ -11,7 +11,7 @@ Examples
 You can test the script from the CLI using 
 splunk cmd python maltego.py
 
-Copyright 2010 Marinus van Aswegen. All rights reserved.
+Copyright 2013 Marinus van Aswegen. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are
 permitted provided that the following conditions are met:
@@ -60,7 +60,7 @@ def is_safe(fname):
 	
 	path = posixpath.normpath(fname)
 	if not path.startswith(('/home', '/tmp')):
-		return False, 'you cant write to /home or /tmp'
+		return False, 'you can only write to /home or /tmp'
 	
 	if path.count('.') > 0:
 		return False, 'mmmm what are you doing?'
@@ -110,7 +110,7 @@ try:
 			nodes[result[e2]] = True
 		
 		if label:
-			links.append((result[e1],result[e2],label))
+			links.append((result[e1],result[e2],result.get(label,'?')))
 			
 	# create the graph
 	if not e2:
