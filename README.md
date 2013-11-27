@@ -10,22 +10,25 @@ You'd probbable what to
 S2M Examples
 --------------
 syntax
-  * | maltego e1=entity [e2=entity] [type=entity type] [label=label] file=filename
-
+```
+* | maltego e1=entity [e2=entity] [type=entity type] [label=label] file=filename
+```
 export a list of entities
-
-  * | maltego e1=src type=IPv4Address file=/tmp/attack
-
+```
+* | maltego e1=src type=IPv4Address file=/tmp/attack
+```
 export entities with relationships
-  * | maltego e1=src e2=dst label=proto type=IPv4Address file=/tmp/attacks
-
+```
+* | maltego e1=src e2=dst label=proto type=IPv4Address file=/tmp/attacks
+```
 for all the systems that are being splunked,
    find all ip addresses, accross all the logs,
    send to malto a deduplicated list of host to ip address relationships,
    indicating when the last event was received.
    Phew!
-   
-  * | rex "(?<ip_address>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)" | dedup ip_address | maltego e1=ip_address e2=host label=_time file=/tmp/lastseen
+```
+* | rex "(?<ip_address>\b\d{1,3}.\d{1,3}.\d{1,3}.\d{1,3}\b)" | dedup ip_address, host | convert ctime(_time) as time | maltego e1=ip_address e2=host label=time file=/tmp/whostalking
+```
 
 You can not load these graphs in Maltego.
 
@@ -38,7 +41,9 @@ M2S Examples
 I want a list of IP Addresses that have been seen by splunk.
 
 Add a Splunk search as a Phrase.
-  "* | rex "(?<ip_address>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)" | dedup ip_address | fields ip_address, _time, source"
+```
+"* | rex "(?<ip_address>\b\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\b)" | dedup ip_address | fields ip_address, _time, source"
+```  
 
 select the "to Splunk Search" transform
 Profit!
