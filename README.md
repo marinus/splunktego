@@ -76,7 +76,7 @@ Following the sagely advice of the Sorkin, http://answers.splunk.com/answers/603
 - Link to the source from splunk/etc/apps/splunktego/bin
   cd <where you installed splunk/etc/apps/splunktego/bin
   ln -s .../networkx/networkx .
-  ln -s .../pymtgx/pymtgx.py .
+  ln -s .../pymtgx/src/pymtgx.py .
   
   
   
